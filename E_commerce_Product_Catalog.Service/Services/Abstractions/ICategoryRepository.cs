@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
-    internal interface ICategoryRepository
+    public interface ICategoryRepository
     {
-        Category GetCategoryId(Guid id);
-
-        void SaveCategoryInfo (Category category);
+        Category AddCategory(Category category);
+        List<Category> GetCategories();
+        Category GetCategoryById(Guid id);
+        void UpdateCategory(Category category);
+        void RemoveCategory(Guid id);
     }
 }

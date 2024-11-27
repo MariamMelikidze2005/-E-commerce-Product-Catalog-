@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
-    internal interface IProductRepository
+    public interface IProductRepository
     {
-        Product GetByProductId(Guid productId);
-        void SaveProductInfo (Product product);
+        Product AddProduct(Product product);
+        List<Product> GetProductsByCategory(Guid categoryId);
+        List<Product> GetProductsByOwner(Guid ownerId);
+        List<Product> GetAllProducts();
+        Product GetProductById(Guid productId);
+        void RemoveProduct(Guid productId);
+        void UpdateProduct(Product product);
     }
 }

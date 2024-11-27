@@ -1,4 +1,5 @@
-﻿using E_commerce_Product_Catalog.Service.Exceptions;
+﻿using E_commerce_Product_Catalog.Service.Commands;
+using E_commerce_Product_Catalog.Service.Exceptions;
 using E_commerce_Product_Catalog.Service.Models;
 using System;
 using System.Collections.Generic;
@@ -12,24 +13,24 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
 {
     public class UserService
     {
-        private List<User> _users = new List<User>();
-
-        public Guid Id { get; private set; }
+        private readonly List<User> _users = new List<User>();
 
         public User RegisterUser(string name, string email, string password)
         {
-            if (string.IsNullOrWhiteSpace(name) || name.Length < 1 || name.Length > 100)
-                //throw new InvalidNameException();
+            var userValidator = new UserRegristration(name, password, email);
 
-                if (string.IsNullOrWhiteSpace(password) || password.Length < 8 || password.Length > 16)
-                    //throw new InvalidPasswordException();
+            var validationResult = userValidator.Validate(new User
+            {
+                Name = name,
+                Email = email,
+                Password = password
+            });
 
-
-                    if (string.IsNullOrWhiteSpace(email) || email.Length > 100 || !IsValidEmail(email))
-                        //throw new InvalidEmailFormatException(email);
-                        if (_users.Any(u => u.Email == email)) ;
-            //throw new UserAlreadyExistsException(email);
-
+            if (!validationResult.IsValid)
+            {
+                var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException($"Validation failed: {errors}");
+            }
 
             var user = new User
             {
@@ -39,22 +40,13 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
                 Password = password
             };
 
-
-
             _users.Add(user);
             return user;
         }
-        private bool IsValidEmail(string email)
-        {
-            var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(email, emailPattern);
-        }
-
 
         public User GetUserById(Guid id)
         {
             return _users.FirstOrDefault(u => u.Id == id);
-            //throw new UserNotFoundException(Id);
         }
     }
 }

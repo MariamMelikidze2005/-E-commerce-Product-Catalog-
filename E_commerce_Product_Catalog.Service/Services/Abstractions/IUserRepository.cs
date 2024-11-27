@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
-        User GetByUserId (Guid userId);
-        void SaveUserInfo (User user);
-
+        User GetUserById(Guid id);
+        IEnumerable<User> GetAllUsers();
+        void AddUser(User user);
+        bool IsEmailUnique(string email);
     }
 }
