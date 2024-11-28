@@ -13,13 +13,11 @@ namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 
         public async Task<Cart> GetCartByUserIdAsync(Guid userId)
         {
-            // Simulating async work (e.g., querying a database)
             return await Task.FromResult(_carts.FirstOrDefault(c => c.UserId == userId));
         }
 
         public async Task AddCartAsync(Cart cart)
         {
-            // Simulating async work (e.g., inserting a record in a database)
             await Task.Run(() => _carts.Add(cart));
         }
 

@@ -30,8 +30,7 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<CategoryService>();
 
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+
 
 
 var app = builder.Build();
