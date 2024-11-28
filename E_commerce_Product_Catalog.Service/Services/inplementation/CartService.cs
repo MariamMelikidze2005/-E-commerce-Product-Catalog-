@@ -76,7 +76,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
             if (cart.Items.Count == 0)
                 await _cartRepository.RemoveCartAsync(cart);
             else
-                await _cartRepository.UpdateCartAsync(cart); // Add update logic to handle cart modifications
+                await _cartRepository.UpdateCartAsync(cart);
         }
 
         public async Task RemoveProductAsync(Guid userId, Guid productId)
@@ -92,7 +92,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
             if (cart.Items.Count == 0)
                 await _cartRepository.RemoveCartAsync(cart);
             else
-                await _cartRepository.UpdateCartAsync(cart); // Add update logic to handle cart modifications
+                await _cartRepository.UpdateCartAsync(cart); 
         }
 
         private async Task<Product> GetProductByIdAsync(Guid productId)

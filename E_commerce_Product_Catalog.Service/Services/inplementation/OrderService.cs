@@ -51,6 +51,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
 
             order.Status = "Canceled";
             await _orderRepository.UpdateOrderAsync(order);
+
         }
 
         public async Task ConfirmOrderAsync(Guid orderId)
