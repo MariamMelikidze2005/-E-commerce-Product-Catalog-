@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Services.Implementation
+namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
     public class CartRepository : ICartRepository
     {

@@ -61,7 +61,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
 
         public async Task<Product> GetProductById(Guid productId)
         {
-            return await _productRepository.GetProductById(productId);
+            return await _productRepository.GetProductByIdAsync(productId);
         }
 
         public async Task RemoveProduct(Guid productId)
@@ -71,7 +71,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
 
         public async Task UpdateProduct(Guid productId, string name, string description, decimal price, int quantity, Guid categoryId)
         {
-            var product = await _productRepository.GetProductById(productId); 
+            var product = await _productRepository.GetProductByIdAsync(productId); 
             product.Name = name ?? product.Name;
             product.Description = description ?? product.Description;
             product.Price = price != 0 ? price : product.Price;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Services.Abstractions.ICategoryRepository
+namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
     public interface ICategoryRepository
     {
