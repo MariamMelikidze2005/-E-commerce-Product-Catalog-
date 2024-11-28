@@ -8,27 +8,25 @@ using System.Threading.Tasks;
 
 namespace E_commerce_Product_Catalog.Service.Commands
 {
-    public class AddProductCommand : AbstractValidator <Product>
+    public class AddProductCommand : AbstractValidator<Product>
     {
-        public AddProductCommand(string name, decimal price, int quantity)
+        public AddProductCommand()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .Must(o => string.IsNullOrWhiteSpace(name) || name.Length < 1 || name.Length > 100);
+                .NotEmpty().WithMessage("Product name cannot be empty.")
+                .MaximumLength(100).WithMessage("Product name cannot exceed 100 characters.");
 
             RuleFor(x => x.Price)
-                .NotEmpty()
-                .WithMessage("Price cannot be empty.")
-                .GreaterThan(0)
-                .WithMessage("Price must be greater than 0.");
-
+                .GreaterThan(0).WithMessage("Price must be greater than 0.");
 
             RuleFor(x => x.Quantity)
-                .NotEmpty()
-                .WithMessage("Quantity cannot be empty.")
-                .GreaterThan(0)
-                .WithMessage("Quantity must be greater than 0.");
+                .GreaterThanOrEqualTo(0).WithMessage("Quantity must be 0 or greater.");
 
+            RuleFor(x => x.CategoryId)
+                .NotEmpty().WithMessage("CategoryId cannot be empty.");
+
+            RuleFor(x => x.OwnerId)
+                .NotEmpty().WithMessage("OwnerId cannot be empty.");
         }
     }
 }

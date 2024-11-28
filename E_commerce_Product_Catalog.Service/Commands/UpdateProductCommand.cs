@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce_Product_Catalog.Service.Commands
 {
-    internal class UpdateProductCommand : AbstractValidator<Product>
+    public class UpdateProductCommand : AbstractValidator<Product>
     {
         public UpdateProductCommand()
         {

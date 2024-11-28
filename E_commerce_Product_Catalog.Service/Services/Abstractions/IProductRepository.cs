@@ -7,14 +7,23 @@ using System.Threading.Tasks;
 
 namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
-    public interface IProductRepository
+    using E_commerce_Product_Catalog.Service.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    namespace E_commerce_Product_Catalog.Service.Services.Abstractions
     {
-        Product AddProduct(Product product);
-        List<Product> GetProductsByCategory(Guid categoryId);
-        List<Product> GetProductsByOwner(Guid ownerId);
-        List<Product> GetAllProducts();
-        Product GetProductById(Guid productId);
-        void RemoveProduct(Guid productId);
-        void UpdateProduct(Product product);
+        public interface IProductRepository
+        {
+            Task<Product> AddProduct(Product product);
+            Task<List<Product>> GetProductsByCategory(Guid categoryId);
+            Task<List<Product>> GetProductsByOwner(Guid ownerId);
+            Task<List<Product>> GetAllProducts();
+            Task<Product> GetProductByIdAsync(Guid productId); 
+            Task RemoveProduct(Guid productId);
+            Task UpdateProduct(Product product);
+        }
     }
+
 }

@@ -1,23 +1,26 @@
 ﻿using E_commerce_Product_Catalog.Service.Commands;
 using E_commerce_Product_Catalog.Service.Exceptions;
 using E_commerce_Product_Catalog.Service.Models;
+using E_commerce_Product_Catalog.Service.Services.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Services.inplementation
+namespace E_commerce_Product_Catalog.Service.Services.Implementation
 {
     public class UserService
     {
-        private readonly List<User> _users = new List<User>();
+        private readonly IUserRepository _userRepository;
 
-        public User RegisterUser(string name, string email, string password)
+        public UserService(IUserRepository userRepository)
         {
-            var userValidator = new UserRegristration(name, password, email);
+            _userRepository = userRepository;
+        }
+
+        public async Task<User> RegisterUserAsync(string name, string email, string password)
+        {
+            var userValidator = new UserRegristrationcommand();
 
             var validationResult = userValidator.Validate(new User
             {
@@ -32,6 +35,13 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
                 throw new ArgumentException($"Validation failed: {errors}");
             }
 
+            // ვამოწმებთ, რომ ელფოსტა უნიკალური იყოს
+            var isEmailUnique = await _userRepository.IsEmailUniqueAsync(email);
+            if (!isEmailUnique)
+            {
+                throw new ArgumentException("Email is already in use.");
+            }
+
             var user = new User
             {
                 Id = Guid.NewGuid(),
@@ -40,13 +50,18 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
                 Password = password
             };
 
-            _users.Add(user);
+            await _userRepository.AddUserAsync(user);
             return user;
         }
 
-        public User GetUserById(Guid id)
+        public async Task<User> GetUserByIdAsync(Guid id)
         {
-            return _users.FirstOrDefault(u => u.Id == id);
+            var user = await _userRepository.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                throw new ArgumentException($"User with ID {id} not found.");
+            }
+            return user;
         }
     }
 }

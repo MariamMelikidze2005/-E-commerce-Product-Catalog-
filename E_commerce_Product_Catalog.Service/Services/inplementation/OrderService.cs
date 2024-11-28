@@ -1,22 +1,29 @@
 ﻿using E_commerce_Product_Catalog.Service.Exceptions;
 using E_commerce_Product_Catalog.Service.Models;
+using E_commerce_Product_Catalog.Service.Services.Abstractions;
+using E_commerce_Product_Catalog.Service.Services.Abstractions.E_commerce_Product_Catalog.Service.Services.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Services.inplementation
+namespace E_commerce_Product_Catalog.Service.Services.Implementation
 {
     public class OrderService
     {
-        private List<Order> _orders = new List<Order>();
+        private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
 
-
-
-        public Order PlaceOrder(Guid customerId, List<CartItem> cartItems, Func<Guid, decimal> getPrice)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
         {
-            if (!cartItems.Any()) throw new InvalidOperationException("this cart is empty");
+            _orderRepository = orderRepository;
+            _productRepository = productRepository;
+        }
+
+        public async Task<Order> PlaceOrderAsync(Guid customerId, List<CartItem> cartItems, Func<Guid, decimal> getPrice)
+        {
+            if (!cartItems.Any()) throw new InvalidOperationException("This cart is empty");
+
             var order = new Order
             {
                 Id = Guid.NewGuid(),
@@ -27,38 +34,34 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
                     ProductId = ci.ProductId,
                     Quantity = ci.Quantity,
                     Price = getPrice(ci.ProductId)
-
                 }).ToList(),
                 TotalPrice = cartItems.Sum(ci => ci.Quantity * getPrice(ci.ProductId)),
                 Status = "Pending",
-
             };
-            _orders.Add(order);
+
+            await _orderRepository.AddOrderAsync(order);
             return order;
         }
 
-        public void CancelOrder(Guid orderId)
+        public async Task CancelOrderAsync(Guid orderId)
         {
-            var order = _orders.FirstOrDefault(o => o.Id == orderId);
-            if (order != null) { throw new OrderNotFoundException(orderId); }
-            if (order.Status != "Pending") { throw new InvalidOperationException("Only orders with 'Pending' status can be cancelled."); }
-            order.Status = "Canceled";
-        }
-        public void ConfirmeOrder(Guid orderId)
-        {
-            var order = _orders.FirstOrDefault(o => o.Id == orderId);
-            if (order == null)
-            {
-                throw new OrderNotFoundException(orderId);
-            }
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            if (order == null) throw new OrderNotFoundException(orderId);
+            if (order.Status != "Pending") throw new InvalidOperationException("Only orders with 'Pending' status can be cancelled.");
 
-            if (order.Status != "Pending")
-            {
-                throw new OrderCannotBeConfirmedException();
-            }
+            order.Status = "Canceled";
+            await _orderRepository.UpdateOrderAsync(order);
+        }
+
+        public async Task ConfirmOrderAsync(Guid orderId)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            if (order == null) throw new OrderNotFoundException(orderId);
+            if (order.Status != "Pending") throw new OrderCannotBeConfirmedException();
+
             foreach (var item in order.Items)
             {
-                var product = GetProductById(item.ProductId);
+                var product = await _productRepository.GetProductByIdAsync(item.ProductId);
                 if (product.Quantity < item.Quantity)
                 {
                     throw new InsufficientStockException();
@@ -66,28 +69,17 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
                 product.Quantity -= item.Quantity;
             }
             order.Status = "Confirmed";
+            await _orderRepository.UpdateOrderAsync(order);
         }
-        public void CompletedOrder(Guid orderId)
-        {
-            var order = _orders.FirstOrDefault(o => o.Id == orderId);
-            if (order == null) { throw new OrderNotFoundException(orderId); }
 
-            if (order.Status != "Confirmed") { throw new InvalidOperationException("Only orders with 'Confirmed' status can be completed."); }
+        public async Task CompleteOrderAsync(Guid orderId)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(orderId);
+            if (order == null) throw new OrderNotFoundException(orderId);
+            if (order.Status != "Confirmed") throw new InvalidOperationException("Only orders with 'Confirmed' status can be completed.");
+
             order.Status = "Completed";
-        }
-
-        private Product GetProductById(Guid productId)
-        {
-            var product = _products.FirstOrDefault(p => p.Id == productId);
-            if (product == null)
-            {
-                throw new ProductNotFoundException(productId);
-            }
-            return product;
-        }
-        internal object PlaceOrder(Guid userId, List<CartItem> cartItem)
-        {
-            throw new NotImplementedException();//მისახედი გაქვს მარიამ
+            await _orderRepository.UpdateOrderAsync(order);
         }
     }
 }

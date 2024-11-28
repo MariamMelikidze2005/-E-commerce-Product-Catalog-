@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using E_commerce_Product_Catalog.Service.Models;
 using E_commerce_Product_Catalog.Service.Services.Abstractions;
 
@@ -10,24 +11,24 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
     {
         private readonly List<User> _users = new List<User>();
 
-        public User GetUserById(Guid id)
+        public async Task<User> GetUserByIdAsync(Guid id)
         {
-            return _users.FirstOrDefault(user => user.Id == id);
+            return await Task.FromResult(_users.FirstOrDefault(user => user.Id == id));
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return _users;
+            return await Task.FromResult(_users);
         }
 
-        public void AddUser(User user)
+        public async Task AddUserAsync(User user)
         {
-            _users.Add(user);
+            await Task.Run(() => _users.Add(user));
         }
 
-        public bool IsEmailUnique(string email)
+        public async Task<bool> IsEmailUniqueAsync(string email)
         {
-            return !_users.Any(user => user.Email == email);
+            return await Task.FromResult(!_users.Any(user => user.Email == email));
         }
     }
 }

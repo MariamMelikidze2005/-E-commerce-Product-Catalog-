@@ -1,68 +1,73 @@
 ﻿using E_commerce_Product_Catalog.Service.Commands;
 using E_commerce_Product_Catalog.Service.Exceptions;
 using E_commerce_Product_Catalog.Service.Models;
-using E_commerce_Product_Catalog.Service.Repositories;
 using E_commerce_Product_Catalog.Service.Services.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace E_commerce_Product_Catalog.Service.Services.implementation
+public class CategoryService
 {
-    public class CategoryService
+    private readonly ICategoryRepository _categoryRepository;
+    private readonly AddCategoryCommand _addCategoryCommand;
+
+    public CategoryService(ICategoryRepository categoryRepository, AddCategoryCommand addCategoryCommand)
     {
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly AddCategoryCommand _addCategoryCommand;
+        _categoryRepository = categoryRepository;
+        _addCategoryCommand = addCategoryCommand;
+    }
 
-        public CategoryService(ICategoryRepository categoryRepository, AddCategoryCommand addCategoryCommand)
+    public async Task<Category> AddCategoryAsync(string categoryName)
+    {
+        var category = new Category
         {
-            _categoryRepository = categoryRepository;
-            _addCategoryCommand = addCategoryCommand;
+            Id = Guid.NewGuid(),
+            CategoryName = categoryName
+        };
+
+        // ვალიდაციის გამოძახება Command-დან
+        var validationResult = _addCategoryCommand.Validate(category);
+        if (!validationResult.IsValid)
+        {
+            var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+            throw new ArgumentException($"Validation failed: {errors}");
         }
 
-        public Category AddCategory(string categoryName)
+        return await _categoryRepository.AddCategoryAsync(category);
+    }
+
+    public async Task<List<Category>> GetCategoriesAsync()
+    {
+        return await _categoryRepository.GetCategoriesAsync();
+    }
+
+    public async Task<Category> UpdateCategoryAsync(Guid id, string newCategoryName)
+    {
+        var category = await _categoryRepository.GetCategoryByIdAsync(id);
+        if (category == null)
         {
-            var category = new Category()
-            {
-                Id = Guid.NewGuid(),
-                CategoryName = categoryName
-            };
-
-            // ვალიდაცია
-            var validationResult = _addCategoryCommand.Validate(category);
-            if (!validationResult.IsValid)
-            {
-                var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
-                throw new ArgumentException($"Validation failed: {errors}");
-            }
-
-            return _categoryRepository.AddCategory(category);
+            throw new CAtegoryNameNotFoundExeption(id);
         }
 
-        public List<Category> GetCategories()
+        category.CategoryName = newCategoryName;
+
+        // ვალიდაციის გამოძახება Command-დან
+        var validationResult = _addCategoryCommand.Validate(category);
+        if (!validationResult.IsValid)
         {
-            return _categoryRepository.GetCategories();
+            var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+            throw new ArgumentException($"Validation failed: {errors}");
         }
 
-        public Category UpdateCategory(Guid id, string newCategoryName)
+        await _categoryRepository.UpdateCategoryAsync(category);
+        return category;
+    }
+
+    public async Task RemoveCategoryAsync(Guid id)
+    {
+        var category = await _categoryRepository.GetCategoryByIdAsync(id);
+        if (category == null)
         {
-            if (string.IsNullOrWhiteSpace(newCategoryName) || newCategoryName.Length > 100)
-                throw new InvalidCAtegoryNameExeption();
-
-            var category = _categoryRepository.GetCategoryById(id);
-            if (category == null)
-            {
-                throw new CAtegoryNameNotFoundExeption(id);
-            }
-
-            category.CategoryName = newCategoryName;
-            _categoryRepository.UpdateCategory(category);
-            return category;
+            throw new CAtegoryNameNotFoundExeption(id);
         }
 
-        public void RemoveCategory(Guid id)
-        {
-            _categoryRepository.RemoveCategory(id);
-        }
+        await _categoryRepository.RemoveCategoryAsync(id);
     }
 }

@@ -11,7 +11,7 @@ namespace E_commerce_Product_Catalog.Service.Commands
 {
     public class AddCategoryCommand : AbstractValidator<Category>
     {
-        public AddCategoryCommand(string categoryName)
+        public AddCategoryCommand()
         {
             RuleFor(x => x.CategoryName)
                 .NotEmpty().WithMessage("Category name cannot be empty.")

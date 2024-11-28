@@ -1,30 +1,36 @@
-﻿using E_commerce_Product_Catalog.Service.Exceptions;
+﻿using E_commerce_Product_Catalog.Service.Commands;
+using E_commerce_Product_Catalog.Service.Exceptions;
 using E_commerce_Product_Catalog.Service.Models;
 using E_commerce_Product_Catalog.Service.Services.Abstractions;
+using E_commerce_Product_Catalog.Service.Services.Abstractions.E_commerce_Product_Catalog.Service.Services.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Services.inplementation
+namespace E_commerce_Product_Catalog.Service.Services.Implementation
 {
     public class CartService
     {
         private readonly ICartRepository _cartRepository;
-        public CartService(ICartRepository cartRepository)
+        private readonly IProductRepository _productRepository;
+        private readonly UpdateCartItemQuantityCommand _updateCartItemQuantityCommand;
+
+        public CartService(ICartRepository cartRepository, IProductRepository productRepository, UpdateCartItemQuantityCommand updateCartItemQuantityCommand)
         {
             _cartRepository = cartRepository;
+            _productRepository = productRepository;
+            _updateCartItemQuantityCommand = updateCartItemQuantityCommand;
         }
 
 
-        private List<Cart> _carts = new List<Cart>();
-        private List<Product> _products = new List<Product>();
-
-        public void AddToCart(Guid userId, Guid productId, int quantity)
+        public async Task AddToCartAsync(Guid userId, Guid productId, int quantity)
         {
             if (quantity <= 0)
                 throw new InvalidQuantitiyOfCartItemExeption(productId);
-            var product = GetProductById(productId);
-            var cart = _carts.FirstOrDefault(c => c.UserId == userId) ?? new Cart { UserId = userId };
+
+            var product = await GetProductByIdAsync(productId);
+            var cart = await _cartRepository.GetCartByUserIdAsync(userId) ?? new Cart { UserId = userId };
 
             var item = cart.Items.FirstOrDefault(i => i.ProductId == productId);
             if (item == null)
@@ -35,53 +41,71 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
             {
                 item.Quantity += quantity;
             }
-            if (!_carts.Contains(cart))
-                _carts.Add(cart);
+
+            if (!await _cartRepository.ContainsCartAsync(cart))
+                await _cartRepository.AddCartAsync(cart);
         }
 
-        public void UpdateProductQuantity(Guid userId, Guid productId, int newQuantity)
+        public async Task UpdateProductQuantityAsync(Guid userId, Guid productId, int newQuantity)
         {
-            if (newQuantity <= 0) throw new InvalidQuantitiyOfCartItemExeption(productId);
+            var cartItem = new CartItem { ProductId = productId, Quantity = newQuantity };
 
-            var cart = _carts.FirstOrDefault(c => c.UserId == userId);
+            var validationResult = _updateCartItemQuantityCommand.Validate(cartItem);
+            if (!validationResult.IsValid)
+            {
+                var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+                throw new ArgumentException($"Validation failed: {errors}");
+            }
+
+            var cart = await _cartRepository.GetCartByUserIdAsync(userId);
             if (cart == null) throw new InvalidOperationException("Cart not found for this user.");
 
             var item = cart.Items.FirstOrDefault(i => i.ProductId == productId);
             if (item == null) throw new InvalidOperationException("Product not found in cart.");
 
-            var product = GetProductById(productId);
-            if (product.Quantity == 0 || newQuantity == 0) { cart.Items.Remove(item); }
-            else if (product.Quantity > newQuantity) { item.Quantity = product.Quantity; }
-            else { item.Quantity = newQuantity; }
+            var product = await GetProductByIdAsync(productId);
+            if (product.Quantity == 0 || newQuantity == 0)
+            {
+                cart.Items.Remove(item);
+            }
+            else if (product.Quantity >= newQuantity) // Correct comparison to prevent exceeding stock
+            {
+                item.Quantity = newQuantity;
+            }
 
-            if (cart.Items.Count == 0) { _carts.Remove(cart); }
+            if (cart.Items.Count == 0)
+                await _cartRepository.RemoveCartAsync(cart);
+            else
+                await _cartRepository.UpdateCartAsync(cart); // Add update logic to handle cart modifications
         }
-        public void RemoveProduct(Guid userId, Guid productId)
+
+        public async Task RemoveProductAsync(Guid userId, Guid productId)
         {
-            var cart = _carts.FirstOrDefault(c => c.UserId == userId);
+            var cart = await _cartRepository.GetCartByUserIdAsync(userId);
             if (cart == null) throw new InvalidOperationException("Cart not found for this user.");
 
             var item = cart.Items.FirstOrDefault(i => i.ProductId == productId);
-            if (item == null) { throw new InvalidOperationException("Product not found in cart"); }
+            if (item == null) throw new InvalidOperationException("Product not found in cart.");
+
             cart.Items.Remove(item);
 
-            if (cart.Items.Count == 0) _carts.Remove(cart);
+            if (cart.Items.Count == 0)
+                await _cartRepository.RemoveCartAsync(cart);
+            else
+                await _cartRepository.UpdateCartAsync(cart); // Add update logic to handle cart modifications
         }
 
-        private Product GetProductById(Guid productId)
+        private async Task<Product> GetProductByIdAsync(Guid productId)
         {
-            var product = _products.FirstOrDefault(p => p.Id == productId);
-            if (product == null) { throw new InvalidOperationException("product not fouund"); }
+            var product = await _productRepository.GetProductByIdAsync(productId);
+            if (product == null) throw new InvalidOperationException("Product not found");
             return product;
         }
 
-
-
-        public List<CartItem> GetCartItems(Guid userId)
+        public async Task<List<CartItem>> GetCartItemsAsync(Guid userId)
         {
-            return _carts.FirstOrDefault(c => c.UserId == userId)?.Items ?? new List<CartItem>();
+            var cart = await _cartRepository.GetCartByUserIdAsync(userId);
+            return cart?.Items ?? new List<CartItem>();
         }
-
-
     }
 }

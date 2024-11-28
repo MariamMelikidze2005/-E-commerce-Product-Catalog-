@@ -2,11 +2,13 @@
 using E_commerce_Product_Catalog.Service.Exceptions;
 using E_commerce_Product_Catalog.Service.Models;
 using E_commerce_Product_Catalog.Service.Services.Abstractions;
+using E_commerce_Product_Catalog.Service.Services.Abstractions.E_commerce_Product_Catalog.Service.Services.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Services.inplementation
+namespace E_commerce_Product_Catalog.Service.Services.Implementation
 {
     public class ProductService
     {
@@ -19,7 +21,7 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
             _addProductCommand = addProductCommand;
         }
 
-        public Product AddProduct(string name, string description, decimal price, int quantity, Guid categoryId, Guid ownerId)
+        public async Task<Product> AddProduct(string name, string description, decimal price, int quantity, Guid categoryId, Guid ownerId)
         {
             var product = new Product
             {
@@ -32,7 +34,6 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
                 OwnerId = ownerId
             };
 
-            // ვალიდაციის პროცესი
             var validationResult = _addProductCommand.Validate(product);
             if (!validationResult.IsValid)
             {
@@ -40,45 +41,44 @@ namespace E_commerce_Product_Catalog.Service.Services.inplementation
                 throw new ArgumentException($"Validation failed: {errors}");
             }
 
-            return _productRepository.AddProduct(product);
+            return await _productRepository.AddProduct(product); 
         }
 
-        public List<Product> GetProductsByCategory(Guid categoryId)
+        public async Task<List<Product>> GetProductsByCategory(Guid categoryId)
         {
-            return _productRepository.GetProductsByCategory(categoryId);
+            return await _productRepository.GetProductsByCategory(categoryId);
         }
 
-        public List<Product> GetProductsByOwner(Guid ownerId)
+        public async Task<List<Product>> GetProductsByOwner(Guid ownerId)
         {
-            return _productRepository.GetProductsByOwner(ownerId);
+            return await _productRepository.GetProductsByOwner(ownerId); 
         }
 
-        public List<Product> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
-            return _productRepository.GetAllProducts();
+            return await _productRepository.GetAllProducts();
         }
 
-        public Product GetProductById(Guid productId)
+        public async Task<Product> GetProductById(Guid productId)
         {
-            return _productRepository.GetProductById(productId);
+            return await _productRepository.GetProductById(productId);
         }
 
-        public void RemoveProduct(Guid productId)
+        public async Task RemoveProduct(Guid productId)
         {
-            _productRepository.RemoveProduct(productId);
+            await _productRepository.RemoveProduct(productId); 
         }
 
-        public void UpdateProduct(Guid productId, string name, string description, decimal price, int quantity, Guid categoryId)
+        public async Task UpdateProduct(Guid productId, string name, string description, decimal price, int quantity, Guid categoryId)
         {
-            var product = _productRepository.GetProductById(productId);
+            var product = await _productRepository.GetProductById(productId); 
             product.Name = name ?? product.Name;
             product.Description = description ?? product.Description;
             product.Price = price != 0 ? price : product.Price;
             product.Quantity = quantity >= 0 ? quantity : product.Quantity;
             product.CategoryId = categoryId != Guid.Empty ? categoryId : product.CategoryId;
 
-            _productRepository.UpdateProduct(product);
+            await _productRepository.UpdateProduct(product); 
         }
-
     }
 }

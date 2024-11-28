@@ -5,14 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Services.Abstractions
+namespace E_commerce_Product_Catalog.Service.Services.Abstractions.ICategoryRepository
 {
     public interface ICategoryRepository
     {
-        Category AddCategory(Category category);
-        List<Category> GetCategories();
-        Category GetCategoryById(Guid id);
-        void UpdateCategory(Category category);
-        void RemoveCategory(Guid id);
+        Task<Category> AddCategoryAsync(Category category);
+        Task<List<Category>> GetCategoriesAsync();
+        Task<Category> GetCategoryByIdAsync(Guid id);
+        Task UpdateCategoryAsync(Category category);
+        Task RemoveCategoryAsync(Guid id);
     }
+
+
 }
