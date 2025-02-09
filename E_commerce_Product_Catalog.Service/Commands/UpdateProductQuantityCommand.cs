@@ -1,6 +1,6 @@
-﻿using E_commerce_Product_Catalog.Service.Models;
-using FluentValidation;
+﻿using FluentValidation;
 using System;
+using E_commerce_product_catalog.Models;
 
 namespace E_commerce_Product_Catalog.Service.Commands
 {

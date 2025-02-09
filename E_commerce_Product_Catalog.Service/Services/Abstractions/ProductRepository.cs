@@ -1,17 +1,13 @@
-﻿using E_commerce_Product_Catalog.Service.Exceptions;
-using E_commerce_Product_Catalog.Service.Models;
-using E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_Product_Catalog.Service.Services.Abstractions.E_commerce_Product_Catalog.Service.Services.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using E_commerce_product_catalog.Abstraction;
+using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
+using E_commerce_product_catalog.Models;
+using E_commerce_product_catalog.Exceptions;
 
-namespace E_commerce_Product_Catalog.Service.Services.Implementation
+namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly List<Product> _products = new();
+        private readonly List<Product> _products = new List<Product>();
 
         public async Task<Product> AddProduct(Product product)
         {
@@ -19,27 +15,19 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
                 throw new ProductAlreadyExistsException(product.Name);
 
             _products.Add(product);
-            return await Task.FromResult(product);
+            return product;
         }
 
-        public async Task<List<Product>> GetProductsByCategory(Guid categoryId)
-        {
-            var products = _products.Where(p => p.CategoryId == categoryId).ToList();
-            return await Task.FromResult(products);
-        }
+        public Task<List<Product>> GetProductsByCategory(Guid categoryId) =>
+            Task.FromResult(_products.Where(p => p.CategoryId == categoryId).ToList());
 
-        public async Task<List<Product>> GetProductsByOwner(Guid ownerId)
-        {
-            var products = _products.Where(p => p.OwnerId == ownerId).ToList();
-            return await Task.FromResult(products);
-        }
+        public Task<List<Product>> GetProductsByOwner(Guid ownerId) =>
+            Task.FromResult(_products.Where(p => p.OwnerId == ownerId).ToList());
 
         public async Task<List<Product>> GetAllProducts()
         {
-            if (!_products.Any())
-                throw new ProductNotInThisException();
-
-            return await Task.FromResult(_products);
+            if (!_products.Any()) throw new ProductNotInThisException();
+            return _products;
         }
 
         public async Task<Product> GetProductByIdAsync(Guid productId)
@@ -48,7 +36,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
             if (product == null)
                 throw new ProductNotFoundException(productId);
 
-            return await Task.FromResult(product);  
+            return product;
         }
 
         public async Task RemoveProduct(Guid productId)

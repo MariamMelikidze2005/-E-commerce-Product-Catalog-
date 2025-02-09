@@ -1,13 +1,9 @@
-﻿using E_commerce_Product_Catalog.Service.Exceptions;
-using E_commerce_Product_Catalog.Service.Models;
-using E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_Product_Catalog.Service.Services.Abstractions.E_commerce_Product_Catalog.Service.Services.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using E_commerce_product_catalog.Abstraction;
+using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
+using E_commerce_product_catalog.Exceptions;
+using E_commerce_product_catalog.Models;
 
-namespace E_commerce_Product_Catalog.Service.Services.Implementation
+namespace E_commerce_Product_Catalog.Service.Services.inplementation
 {
     public class OrderService
     {

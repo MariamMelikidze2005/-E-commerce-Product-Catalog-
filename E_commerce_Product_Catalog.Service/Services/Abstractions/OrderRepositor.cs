@@ -1,11 +1,7 @@
-﻿using E_commerce_Product_Catalog.Service.Models;
-using E_commerce_Product_Catalog.Service.Services.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using E_commerce_product_catalog.Abstraction;
+using E_commerce_product_catalog.Models;
 
-namespace E_commerce_Product_Catalog.Service.Services.Implementation
+namespace E_commerce_Product_Catalog.Service.Services.Abstractions
 {
     public class OrderRepository : IOrderRepository
     {
@@ -14,19 +10,16 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
         public async Task<Order> AddOrderAsync(Order order)
         {
             _orders.Add(order);
-            return await Task.FromResult(order);
+            return order;
         }
 
-        public async Task<Order> GetOrderByIdAsync(Guid orderId)
-        {
-            var order = _orders.FirstOrDefault(o => o.Id == orderId);
-            return await Task.FromResult(order); 
-        }
+        public Task<Order?> GetOrderByIdAsync(Guid orderId) =>
+            Task.FromResult(_orders.FirstOrDefault(o => o.Id == orderId));
 
         public async Task<List<Order>> GetOrdersByCustomerIdAsync(Guid customerId)
         {
             var orders = _orders.Where(o => o.CustomerId == customerId).ToList();
-            return await Task.FromResult(orders);
+            return orders;
         }
 
         public async Task UpdateOrderAsync(Order order)
@@ -38,7 +31,6 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
                 existingOrder.TotalPrice = order.TotalPrice;
                 existingOrder.Items = order.Items;
             }
-            await Task.CompletedTask;
         }
 
         public async Task RemoveOrderAsync(Guid orderId)
@@ -48,7 +40,6 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
             {
                 _orders.Remove(order);
             }
-            await Task.CompletedTask;
         }
     }
 }

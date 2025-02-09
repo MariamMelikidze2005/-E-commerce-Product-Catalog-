@@ -1,10 +1,11 @@
-﻿using E_commerce_Product_Catalog.Service.Models;
+﻿//using E_commerce_Product_Catalog.Service.Models;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using E_commerce_product_catalog.Models;
 
 namespace E_commerce_Product_Catalog.Service.Commands
 {

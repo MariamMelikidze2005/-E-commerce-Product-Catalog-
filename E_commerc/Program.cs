@@ -1,9 +1,13 @@
-using E_commerce_Product_Catalog.Service.Data;
+//using E_commerce_Product_Catalog.Service.Data;
+using MediatR;
 using E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_Product_Catalog.Service.Services.Abstractions.E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_Product_Catalog.Service.Services.Implementation;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using E_commerce_product_catalog.Abstraction;
+using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
+using E_commerce_Product_Catalog.Service.Services.Implementation;
+using E_commerce_Product_Catalog.Service.Services.inplementation;
+using E_commerce_product_Catalog.SqlRepository.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +34,7 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<CategoryService>();
 
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
 
 var app = builder.Build();

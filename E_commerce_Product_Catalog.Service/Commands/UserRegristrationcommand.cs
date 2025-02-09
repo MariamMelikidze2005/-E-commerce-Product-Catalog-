@@ -1,5 +1,4 @@
-﻿using E_commerce_Product_Catalog.Service.Models;
-using FluentValidation;
+﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +7,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using E_commerce_Product_Catalog.Service.validation;
 using System.Security.Cryptography.X509Certificates;
+using E_commerce_product_catalog.Models;
+
 namespace E_commerce_Product_Catalog.Service.Commands
 {
     public class UserRegristrationcommand : AbstractValidator<User>

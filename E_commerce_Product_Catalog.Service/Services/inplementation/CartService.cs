@@ -1,12 +1,9 @@
-﻿using E_commerce_Product_Catalog.Service.Commands;
-using E_commerce_Product_Catalog.Service.Exceptions;
-using E_commerce_Product_Catalog.Service.Models;
-using E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_Product_Catalog.Service.Services.Abstractions.E_commerce_Product_Catalog.Service.Services.Abstractions;
-using System;
-using System.Collections.Generic;
+﻿using E_commerce_product_catalog.Abstraction;
+using E_commerce_product_catalog.Exceptions;
+using E_commerce_product_catalog.Models;
+using E_commerce_Product_Catalog.Service.Commands;
 using System.Linq;
-using System.Threading.Tasks;
+using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
 
 namespace E_commerce_Product_Catalog.Service.Services.Implementation
 {
@@ -22,7 +19,6 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
             _productRepository = productRepository;
             _updateCartItemQuantityCommand = updateCartItemQuantityCommand;
         }
-
 
         public async Task AddToCartAsync(Guid userId, Guid productId, int quantity)
         {
@@ -68,7 +64,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
             {
                 cart.Items.Remove(item);
             }
-            else if (product.Quantity >= newQuantity) // Correct comparison to prevent exceeding stock
+            else if (product.Quantity >= newQuantity)
             {
                 item.Quantity = newQuantity;
             }
@@ -92,7 +88,7 @@ namespace E_commerce_Product_Catalog.Service.Services.Implementation
             if (cart.Items.Count == 0)
                 await _cartRepository.RemoveCartAsync(cart);
             else
-                await _cartRepository.UpdateCartAsync(cart); 
+                await _cartRepository.UpdateCartAsync(cart);
         }
 
         private async Task<Product> GetProductByIdAsync(Guid productId)
