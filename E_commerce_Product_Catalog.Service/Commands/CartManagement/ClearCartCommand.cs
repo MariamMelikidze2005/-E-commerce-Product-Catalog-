@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using E_commerce_product_catalog.Abstraction;
+﻿using E_commerce_product_catalog.Abstraction;
 
-namespace E_commerce_product_Catalog.Domain.Commands
+namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
 {
     public class ClearCartCommand : ICommand
     {

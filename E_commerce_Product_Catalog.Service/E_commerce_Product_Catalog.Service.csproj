@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\E-commerce-product-Catalog.SqlRepository\E-commerce-product-Catalog.SqlRepository.csproj" />
     <ProjectReference Include="..\E-commerce-product-catalog\E-commerce-product-catalog.Domain.csproj" />
   </ItemGroup>
 

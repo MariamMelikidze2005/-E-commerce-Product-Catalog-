@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using E_commerce_product_catalog.Models;
-using E_commerce_Product_Catalog.Service.Services.Implementation;
 using E_commerce_Product_Catalog.Service.Services.inplementation;
 
 namespace E_commerc.Controllers
