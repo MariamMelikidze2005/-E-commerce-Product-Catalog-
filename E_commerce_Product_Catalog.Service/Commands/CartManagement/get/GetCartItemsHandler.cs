@@ -2,7 +2,7 @@
 using E_commerce_product_catalog.Models;
 using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
+namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.get
 {
     public class GetCartItemsHandler : IRequestHandler<GetCartItemsQuery, List<CartItem>>
     {

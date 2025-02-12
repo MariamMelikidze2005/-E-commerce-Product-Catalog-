@@ -2,7 +2,7 @@
 using E_commerce_product_catalog.Models;
 using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories
+namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories.update
 {
     public class UpdateCategoryHandler : IRequestHandler<UpdateCategoryCommand, Category>
     {

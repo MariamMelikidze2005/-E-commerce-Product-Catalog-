@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories
+namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories.get
 {
     internal class GetCategoriesQuery
     {

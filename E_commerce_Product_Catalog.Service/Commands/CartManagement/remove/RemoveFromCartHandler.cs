@@ -1,7 +1,7 @@
 ﻿using E_commerce_product_catalog.Abstraction;
 using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
+namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.remove
 {
     public class RemoveFromCartHandler : IRequestHandler<RemoveFromCartCommand>
     {

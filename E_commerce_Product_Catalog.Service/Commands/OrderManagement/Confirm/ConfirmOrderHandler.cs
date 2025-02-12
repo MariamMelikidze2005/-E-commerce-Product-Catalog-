@@ -3,7 +3,7 @@ using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.
 using E_commerce_product_catalog.Exceptions;
 using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement
+namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.Confirm
 {
     public class ConfirmOrderHandler : IRequestHandler<ConfirmOrderCommand>
     {

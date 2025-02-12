@@ -1,7 +1,7 @@
 ﻿using E_commerce_product_catalog.Models;
 using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement
+namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.placeorder
 {
     public class PlaceOrderCommand : IRequest<Order>
     {

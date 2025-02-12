@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories
+namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories.remove
 {
     public class RemoveCategoryCommand : IRequest
     {

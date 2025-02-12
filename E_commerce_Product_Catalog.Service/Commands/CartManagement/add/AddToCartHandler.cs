@@ -4,7 +4,7 @@ using E_commerce_product_catalog.Exceptions;
 using E_commerce_product_catalog.Models;
 using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
+namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.add
 {
     public class AddToCartHandler : IRequestHandler<AddToCartCommand>
     {
