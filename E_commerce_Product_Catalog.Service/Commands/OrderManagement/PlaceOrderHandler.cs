@@ -1,6 +1,7 @@
 ﻿using E_commerce_product_catalog.Abstraction;
 using E_commerce_product_catalog.Models;
 using MediatR;
+using IOrderRepository = E_commerce_Product_Catalog.Service.Abstractions.IOrderRepository;
 
 namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement
 {

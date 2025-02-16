@@ -1,10 +1,6 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
 
-namespace E_commerce_product_catalog.Abstraction
+namespace E_commerce_Product_Catalog.Service.Abstractions
 {
     public interface IOrderRepository
     {

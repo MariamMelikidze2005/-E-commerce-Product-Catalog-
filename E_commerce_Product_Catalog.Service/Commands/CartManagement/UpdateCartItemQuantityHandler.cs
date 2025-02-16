@@ -1,6 +1,7 @@
 ﻿using E_commerce_product_catalog.Abstraction;
 using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
 using MediatR;
+using ICartRepository = E_commerce_Product_Catalog.Service.Services.Abstractions.ICartRepository;
 
 namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
 {

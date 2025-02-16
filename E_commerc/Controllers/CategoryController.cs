@@ -2,6 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+namespace E_commerc.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class CategoryController : ControllerBase

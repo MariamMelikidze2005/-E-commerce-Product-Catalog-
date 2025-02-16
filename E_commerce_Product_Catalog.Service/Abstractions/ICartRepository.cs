@@ -1,15 +1,14 @@
 ﻿using E_commerce_product_catalog.Models;
 
-namespace E_commerce_product_catalog.Abstraction
+namespace E_commerce_product_catalog.Abstractions
 {
     public interface ICartRepository
     {
         Task<Cart?> GetCartByUserIdAsync(Guid userId);
+        Task<List<Cart>> GetAllCartsAsync();
+        Task<bool> ContainsCartAsync(Guid userId);
         Task AddCartAsync(Cart cart);
         Task UpdateCartAsync(Cart cart);
-        Task RemoveCartAsync(Cart cart);
-        Task<List<Cart>> GetAllCartsAsync();
-        Task<bool> ContainsCartAsync(Cart cart);  // Make this asynchronous
+        Task RemoveCartAsync(Guid userId);
     }
-
 }

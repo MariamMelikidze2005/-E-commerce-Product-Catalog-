@@ -1,12 +1,9 @@
-﻿
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
+using E_commerce_product_Catalog.SqlRepository.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
-
-//using E_commerce_Product_Catalog.Service.Models;
 
 namespace E_commerce_product_Catalog.SqlRepository.Database
 {
-
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -22,42 +19,16 @@ namespace E_commerce_product_Catalog.SqlRepository.Database
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
 
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-
-            modelBuilder.Entity<Order>()
-                .HasMany(o => o.Items)
-                .WithOne()
-                .HasForeignKey(oi => oi.ProductId)
-                .IsRequired();
-
-            modelBuilder.Entity<OrderItem>()
-                .HasKey(oi => new { oi.ProductId, oi.Quantity });
-
-            modelBuilder.Entity<Product>()
-                .HasOne<Category>()
-                .WithMany()
-                .HasForeignKey(p => p.CategoryId)
-                .IsRequired();
-
-            modelBuilder.Entity<Product>()
-                .HasOne<User>()
-                .WithMany()
-                .HasForeignKey(p => p.OwnerId)
-                .IsRequired();
-
-            modelBuilder.Entity<Cart>()
-                .HasMany(c => c.Items)
-                .WithOne()
-                .HasForeignKey(ci => ci.ProductId)
-                .IsRequired();
-
-            modelBuilder.Entity<CartItem>()
-                .HasKey(ci => new { ci.ProductId, ci.Quantity });
-
-
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new CartItemConfiguration());
         }
     }
 }

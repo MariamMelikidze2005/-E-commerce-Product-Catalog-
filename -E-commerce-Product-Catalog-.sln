@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E_commerc", "E_commerc\E_co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{C6A8F458-8AD8-41E1-B77D-83986A5373C9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{538B7896-9EE4-4D4D-B7BA-F105FDCAA7E7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6AFFDA99-5340-4F27-A0E3-92B795067758}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{538B7896-9EE4-4D4D-B7BA-F105FDCAA7E7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{6324564C-350E-4CC7-97DF-D14B8F40F312}"
 EndProject
@@ -21,7 +19,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{408C52BE-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-commerce-product-catalog.Domain", "E-commerce-product-catalog\E-commerce-product-catalog.Domain.csproj", "{8DEAF634-3265-4D73-A5C7-B31F289ABA61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-commerce-product-Catalog.SqlRepository", "E-commerce-product-Catalog.SqlRepository\E-commerce-product-Catalog.SqlRepository.csproj", "{9C7C199F-15C3-4E3F-9924-50C25015FDF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E-commerce-product-Catalog.SqlRepository", "E-commerce-product-Catalog.SqlRepository\E-commerce-product-Catalog.SqlRepository.csproj", "{9C7C199F-15C3-4E3F-9924-50C25015FDF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{D70AC6D0-BCA2-4CCB-9B09-D8626A688B48}"
+	ProjectSection(SolutionItems) = preProject
+		Token.cs = Token.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5EB1C60A-1709-47CF-B595-514685FA2735}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,11 +59,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{ABC8FCB5-AF78-4593-A586-B4DB945B0770} = {C6A8F458-8AD8-41E1-B77D-83986A5373C9}
+		{ABC8FCB5-AF78-4593-A586-B4DB945B0770} = {5EB1C60A-1709-47CF-B595-514685FA2735}
 		{53864809-0091-4E0A-828A-F06FF29FD3A5} = {408C52BE-DE51-451D-917B-73EF48016688}
 		{1E7E3529-4453-4D3E-8387-79A25767EDAA} = {6324564C-350E-4CC7-97DF-D14B8F40F312}
-		{8DEAF634-3265-4D73-A5C7-B31F289ABA61} = {6AFFDA99-5340-4F27-A0E3-92B795067758}
+		{8DEAF634-3265-4D73-A5C7-B31F289ABA61} = {5EB1C60A-1709-47CF-B595-514685FA2735}
 		{9C7C199F-15C3-4E3F-9924-50C25015FDF9} = {538B7896-9EE4-4D4D-B7BA-F105FDCAA7E7}
+		{D70AC6D0-BCA2-4CCB-9B09-D8626A688B48} = {C6A8F458-8AD8-41E1-B77D-83986A5373C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {62EA9223-F05A-4452-8FDE-95D918D0D429}

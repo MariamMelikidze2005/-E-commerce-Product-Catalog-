@@ -4,7 +4,7 @@ using MediatR;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
 {
-    public class AddProductHandler : IRequestHandler<Commands.AddProductCommand, Product>
+    public class AddProductHandler : IRequestHandler<fluentvalidation.AddProductCommand, Product>
     {
         private readonly IProductRepository _productRepository;
         private readonly AddProductCommandValidator _validator;
@@ -15,7 +15,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
             _validator = validator;
         }
 
-        public async Task<Product> Handle(Commands.AddProductCommand request, CancellationToken cancellationToken)
+        public async Task<Product> Handle(fluentvalidation.AddProductCommand request, CancellationToken cancellationToken)
         {
             var product = new Product
             {

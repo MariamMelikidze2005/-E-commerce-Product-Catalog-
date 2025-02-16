@@ -1,5 +1,6 @@
 ﻿using E_commerce_product_catalog.Abstraction;
 using E_commerce_product_catalog.Models;
+using E_commerce_Product_Catalog.Service.Commands.ManageCategories;
 using MediatR;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories

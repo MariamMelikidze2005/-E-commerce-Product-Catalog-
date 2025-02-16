@@ -1,6 +1,6 @@
 ﻿using E_commerce_product_catalog.Models;
 
-namespace E_commerce_product_catalog.Abstraction
+namespace E_commerce_product_catalog.Abstractions
 {
     public interface ICategoryRepository
     {
@@ -10,6 +10,4 @@ namespace E_commerce_product_catalog.Abstraction
         Task UpdateCategoryAsync(Category category);
         Task RemoveCategoryAsync(Guid id);
     }
-
-
 }
