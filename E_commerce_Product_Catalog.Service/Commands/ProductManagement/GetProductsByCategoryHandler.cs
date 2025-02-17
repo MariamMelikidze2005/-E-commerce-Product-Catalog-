@@ -1,5 +1,5 @@
-﻿using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
+using E_commerce_Product_Catalog.Service.Abstractions;
 using MediatR;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
@@ -15,7 +15,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
 
         public async Task<List<Product>> Handle(GetProductsByCategoryCommand request, CancellationToken cancellationToken)
         {
-            return await _productRepository.GetProductsByCategory(request.CategoryId);
+            return await _productRepository.GetProductsByCategoryAsync(request.CategoryId);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
+﻿using E_commerce_Product_Catalog.Service.Abstractions;
 using MediatR;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
@@ -26,7 +26,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
             product.Quantity = request.Quantity ?? product.Quantity;
             product.CategoryId = request.CategoryId ?? product.CategoryId;
 
-            await _productRepository.UpdateProduct(product);
+            await _productRepository.UpdateProductAsync(product);
         }
     }
 }

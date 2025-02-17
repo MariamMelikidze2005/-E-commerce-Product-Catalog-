@@ -1,21 +1,22 @@
-﻿using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
+using E_commerce_Product_Catalog.Service.Abstractions;
+using FluentValidation;
 using MediatR;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
 {
-    public class AddProductHandler : IRequestHandler<fluentvalidation.AddProductCommand, Product>
+    public class AddProductHandler : IRequestHandler<AddProductCommand, Product>
     {
         private readonly IProductRepository _productRepository;
-        private readonly AddProductCommandValidator _validator;
+        private readonly IValidator<Product> _validator;
 
-        public AddProductHandler(IProductRepository productRepository, AddProductCommandValidator validator)
+        public AddProductHandler(IProductRepository productRepository, IValidator<Product> validator)
         {
             _productRepository = productRepository;
             _validator = validator;
         }
 
-        public async Task<Product> Handle(fluentvalidation.AddProductCommand request, CancellationToken cancellationToken)
+        public async Task<Product> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             var product = new Product
             {
@@ -28,6 +29,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
                 OwnerId = request.OwnerId
             };
 
+            // ვალიდაცია
             var validationResult = _validator.Validate(product);
             if (!validationResult.IsValid)
             {
@@ -35,7 +37,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
                 throw new ArgumentException($"Validation failed: {errors}");
             }
 
-            return await _productRepository.AddProduct(product);
+            return await _productRepository.AddProductAsync(product);
         }
     }
 }

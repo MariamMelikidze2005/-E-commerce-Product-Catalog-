@@ -1,5 +1,5 @@
-﻿using E_commerce_product_catalog.Abstraction;
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
+using E_commerce_Product_Catalog.Service.Abstractions;
 using E_commerce_product_Catalog.SqlRepository.Database;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-﻿using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
+﻿using E_commerce_Product_Catalog.Service.Abstractions;
 using MediatR;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
@@ -14,7 +14,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
 
         public async Task Handle(RemoveProductCommand request, CancellationToken cancellationToken)
         {
-            await _productRepository.RemoveProduct(request.ProductId);
+            await _productRepository.RemoveProductAsync(request.ProductId);
         }
     }
 }

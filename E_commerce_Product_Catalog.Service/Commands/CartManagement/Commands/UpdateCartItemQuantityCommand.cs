@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
+namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.Commands
 {
     public class UpdateCartItemQuantityCommand : IRequest
     {

@@ -1,8 +1,7 @@
-﻿using E_commerce_product_catalog.Abstraction;
-using MediatR;
-using ICartRepository = E_commerce_Product_Catalog.Service.Services.Abstractions.ICartRepository;
+﻿using MediatR;
+using ICartRepository = E_commerce_Product_Catalog.Service.Abstractions.ICartRepository;
 
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
+namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.Commands
 {
     public class RemoveFromCartHandler : IRequestHandler<RemoveFromCartCommand>
     {
@@ -24,7 +23,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
             cart.Items.Remove(item);
 
             if (cart.Items.Count == 0)
-                await _cartRepository.RemoveCartAsync(cart);
+                await _cartRepository.RemoveCartAsync(cart.Id);
             else
                 await _cartRepository.UpdateCartAsync(cart);
         }

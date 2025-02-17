@@ -1,8 +1,6 @@
-﻿using E_commerce_product_catalog.Abstraction;
-using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
+﻿using E_commerce_Product_Catalog.Service.Abstractions;
 using E_commerce_product_Catalog.SqlRepository.Database;
 using E_commerce_product_Catalog.SqlRepository.Imolementation;
-using E_commerce_product_catalog.UNitOfWork;
 
 namespace E_commerce_product_Catalog.SqlRepository.UnitofWork
 {

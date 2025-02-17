@@ -1,5 +1,5 @@
-﻿using E_commerce_product_catalog.Abstraction;
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
+using E_commerce_Product_Catalog.Service.Abstractions;
 using E_commerce_product_Catalog.SqlRepository.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +19,7 @@ namespace E_commerce_product_Catalog.SqlRepository.Imolementation
             return await _dbContext.Users.FindAsync(id);
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<List<User>> GetAllUsersAsync()
         {
             return await _dbContext.Users.ToListAsync();
         }

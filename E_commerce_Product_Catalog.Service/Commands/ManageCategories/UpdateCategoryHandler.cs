@@ -1,7 +1,6 @@
-﻿using E_commerce_product_catalog.Abstraction;
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
 using MediatR;
-using ICategoryRepository = E_commerce_Product_Catalog.Service.Services.Abstractions.ICategoryRepository;
+using ICategoryRepository = E_commerce_Product_Catalog.Service.Abstractions.ICategoryRepository;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories
 {

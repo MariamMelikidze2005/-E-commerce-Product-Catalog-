@@ -21,5 +21,21 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
             CategoryId = categoryId;
             OwnerId = ownerId;
         }
+
+        public (bool IsValid, List<string> Errors) Validate()
+        {
+            var errors = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(Name))
+                errors.Add("Product name is required.");
+
+            if (Price <= 0)
+                errors.Add("Product price must be greater than zero.");
+
+            if (Quantity < 0)
+                errors.Add("Product quantity cannot be negative.");
+
+            return (errors.Count == 0, errors);
+        }
     }
 }

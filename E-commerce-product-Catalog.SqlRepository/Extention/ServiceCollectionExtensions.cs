@@ -1,9 +1,9 @@
-﻿using E_commerce_product_catalog.Abstractions;
-using E_commerce_Product_Catalog.Service.Services.Abstractions;
+﻿using E_commerce_Product_Catalog.Service.Abstractions;
+using E_commerce_product_Catalog.SqlRepository.Imolementation;
 using E_commerce_product_Catalog.SqlRepository.UnitofWork;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace E_commerce_product_catalog.Extention
+namespace E_commerce_product_Catalog.SqlRepository.Extention
 {
     public static class ServiceCollectionExtensions
     {

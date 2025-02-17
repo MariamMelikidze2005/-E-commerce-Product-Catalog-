@@ -1,6 +1,5 @@
-﻿using E_commerce_product_catalog.Abstraction;
-using E_commerce_product_catalog.Abstraction.E_commerce_Product_Catalog.Service.Services.Abstractions;
-using E_commerce_product_catalog.Exceptions;
+﻿using E_commerce_product_catalog.Exceptions;
+using E_commerce_Product_Catalog.Service.Abstractions;
 using MediatR;
 using IOrderRepository = E_commerce_Product_Catalog.Service.Abstractions.IOrderRepository;
 

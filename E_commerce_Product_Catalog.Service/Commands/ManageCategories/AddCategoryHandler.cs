@@ -1,12 +1,11 @@
-﻿using E_commerce_product_catalog.Abstraction;
-using E_commerce_product_catalog.Models;
+﻿using E_commerce_product_catalog.Models;
+using E_commerce_Product_Catalog.Service.Abstractions;
+using E_commerce_Product_Catalog.Service.Commands;
 using MediatR;
-using IAddCategoryCommand = E_commerce_Product_Catalog.Service.Services.Abstractions.ICategoryRepository;
-
 
 namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories
 {
-    public class AddCategoryHandler : IRequestHandler<Commands.AddCategoryCommand, Category>
+    public class AddCategoryHandler : IRequestHandler<AddCategoryCommand, Category>
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -15,7 +14,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Category> Handle(Commands.AddCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Category> Handle(AddCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = new Category
             {
