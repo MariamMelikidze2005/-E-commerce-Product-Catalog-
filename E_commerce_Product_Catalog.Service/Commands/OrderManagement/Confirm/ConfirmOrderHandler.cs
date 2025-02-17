@@ -3,7 +3,7 @@ using E_commerce_Product_Catalog.Service.Abstractions;
 using MediatR;
 using IOrderRepository = E_commerce_Product_Catalog.Service.Abstractions.IOrderRepository;
 
-namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement
+namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.Confirm
 {
     public class ConfirmOrderHandler : IRequestHandler<ConfirmOrderCommand>
     {

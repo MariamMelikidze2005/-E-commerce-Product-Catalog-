@@ -2,7 +2,7 @@
 using MediatR;
 using ICartRepository = E_commerce_Product_Catalog.Service.Abstractions.ICartRepository;
 
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement
+namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.get
 {
     public class GetCartItemsHandler : IRequestHandler<GetCartItemsQuery, List<CartItem>>
     {

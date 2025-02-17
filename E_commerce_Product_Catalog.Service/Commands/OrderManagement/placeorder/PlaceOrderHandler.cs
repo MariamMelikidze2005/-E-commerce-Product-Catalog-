@@ -2,7 +2,7 @@
 using MediatR;
 using IOrderRepository = E_commerce_Product_Catalog.Service.Abstractions.IOrderRepository;
 
-namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement
+namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.placeorder
 {
     public class PlaceOrderHandler : IRequestHandler<PlaceOrderCommand, Order>
     {

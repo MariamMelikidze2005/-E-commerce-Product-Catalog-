@@ -3,7 +3,7 @@ using E_commerce_Product_Catalog.Service.Abstractions;
 using E_commerce_Product_Catalog.Service.Commands;
 using MediatR;
 
-namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories
+namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories.add
 {
     public class AddCategoryHandler : IRequestHandler<AddCategoryCommand, Category>
     {
