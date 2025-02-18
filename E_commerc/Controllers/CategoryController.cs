@@ -1,4 +1,8 @@
 ﻿using E_commerce_Product_Catalog.Service.Commands.ManageCategories;
+using E_commerce_Product_Catalog.Service.Commands.ManageCategories.add;
+using E_commerce_Product_Catalog.Service.Commands.ManageCategories.get;
+using E_commerce_Product_Catalog.Service.Commands.ManageCategories.remove;
+using E_commerce_Product_Catalog.Service.Commands.ManageCategories.update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

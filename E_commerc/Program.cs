@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using E_commerc.Extension;
 using E_commerce_product_Catalog.SqlRepository.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.AddAccessToken().AddJwtConfiguration();
+builder.Services.AddJwtBearerAuthentication(builder.Configuration);
+
 
 builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection(nameof(ConnectionStrings)));
 

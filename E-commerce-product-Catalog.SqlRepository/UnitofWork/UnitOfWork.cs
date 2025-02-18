@@ -51,6 +51,7 @@ namespace E_commerce_product_Catalog.SqlRepository.UnitofWork
         public ICartRepository CartRepository { get; }
         public ICategoryRepository CategoryRepository { get; }
 
+
         //public ITokenRepository TokenRepository => _unitOfWorkImplementation.TokenRepository;
 
         //public ITokenRepository TokenRepository { get; }
