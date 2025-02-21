@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using E_commerce_Product_Catalog.Service.Commands.ManageCategories.update;
+using MediatR;
 using ICategoryRepository = E_commerce_Product_Catalog.Service.Abstractions.ICategoryRepository;
 
 namespace E_commerce_Product_Catalog.Service.Commands.ManageCategories.remove
