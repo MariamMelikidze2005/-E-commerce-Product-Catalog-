@@ -1,3 +1,5 @@
+using Xunit;
+
 namespace E_commerce_product_catalog.Service.Tests
 {
     public class UnitTest1

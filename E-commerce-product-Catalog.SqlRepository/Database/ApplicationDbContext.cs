@@ -1,10 +1,12 @@
-﻿using E_commerce_product_catalog.Models;
+﻿using E_commerce.Identity.Models;
+using E_commerce_product_catalog.Models;
 using E_commerce_product_Catalog.SqlRepository.EntityConfiguration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_commerce_product_Catalog.SqlRepository.Database
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

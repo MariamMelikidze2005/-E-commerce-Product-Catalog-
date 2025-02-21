@@ -15,6 +15,10 @@ namespace E_commerce_product_Catalog.SqlRepository.EntityConfiguration
             builder.Property(c => c.CategoryName)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasIndex(c => c.Id);
+
+
         }
     }
 }

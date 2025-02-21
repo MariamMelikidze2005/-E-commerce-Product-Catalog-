@@ -19,7 +19,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.add
             _productRepository = productRepository;
         }
 
-        public async Task Handle(AddToCartCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddToCartCommand request, CancellationToken cancellationToken)
         {
             if (request.Quantity <= 0)
                 throw new InvalidQuantitiyOfCartItemExeption(request.ProductId);
@@ -41,6 +41,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.add
 
             if (!await _cartRepository.ContainsCartAsync(cart.Id))
                 await _cartRepository.AddCartAsync(cart);
+            return default;
         }
     }
 }

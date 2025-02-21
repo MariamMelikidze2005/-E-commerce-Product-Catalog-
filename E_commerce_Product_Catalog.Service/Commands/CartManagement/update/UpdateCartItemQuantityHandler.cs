@@ -16,7 +16,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.update
             _productRepository = productRepository;
         }
 
-        public async Task Handle(UpdateCartItemQuantityCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCartItemQuantityCommand request, CancellationToken cancellationToken)
         {
             var cart = await _cartRepository.GetCartByUserIdAsync(request.UserId);
             if (cart == null) throw new InvalidOperationException("Cart not found for this user.");
@@ -40,6 +40,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.update
                 await _cartRepository.RemoveCartAsync(cart.Id);
             else
                 await _cartRepository.UpdateCartAsync(cart);
+            return default;
         }
     }
 }

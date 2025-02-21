@@ -16,6 +16,6 @@ namespace E_commerce_Product_Catalog.Service.Abstractions
         public string TokenValue { get; set; } = string.Empty;
         public DateTime ExpiryDate { get; set; }
 
-        public User User { get; set; } // ნავიგაციისთვის
+        public User? User { get; set; } // ნავიგაციისთვის
     }
 }

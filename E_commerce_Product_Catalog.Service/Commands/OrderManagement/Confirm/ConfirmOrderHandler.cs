@@ -16,7 +16,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.Confirm
             _productRepository = productRepository;
         }
 
-        public async Task Handle(ConfirmOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(ConfirmOrderCommand request, CancellationToken cancellationToken)
         {
             var order = await _orderRepository.GetOrderByIdAsync(request.OrderId);
             if (order == null) throw new OrderNotFoundException(request.OrderId);
@@ -25,15 +25,17 @@ namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.Confirm
             foreach (var item in order.Items)
             {
                 var product = await _productRepository.GetProductByIdAsync(item.ProductId);
-                if (product.Quantity < item.Quantity)
+                if (product != null && product.Quantity < item.Quantity)
                 {
                     throw new InsufficientStockException();
                 }
-                product.Quantity -= item.Quantity;
+
+                if (product != null) product.Quantity -= item.Quantity;
             }
 
             order.Status = "Confirmed";
             await _orderRepository.UpdateOrderAsync(order);
+            return default;
         }
     }
 }

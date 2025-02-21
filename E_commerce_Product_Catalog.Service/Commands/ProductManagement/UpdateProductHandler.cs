@@ -12,7 +12,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
             _productRepository = productRepository;
         }
 
-        public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetProductByIdAsync(request.ProductId);
             if (product == null)
@@ -27,6 +27,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
             product.CategoryId = request.CategoryId ?? product.CategoryId;
 
             await _productRepository.UpdateProductAsync(product);
+            return default;
         }
     }
 }

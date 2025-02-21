@@ -13,7 +13,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.Cancle
             _orderRepository = orderRepository;
         }
 
-        public async Task Handle(CancelOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
         {
             var order = await _orderRepository.GetOrderByIdAsync(request.OrderId);
             if (order == null) throw new OrderNotFoundException(request.OrderId);
@@ -21,6 +21,7 @@ namespace E_commerce_Product_Catalog.Service.Commands.OrderManagement.Cancle
 
             order.Status = "Canceled";
             await _orderRepository.UpdateOrderAsync(order);
+            return default;
         }
     }
 }

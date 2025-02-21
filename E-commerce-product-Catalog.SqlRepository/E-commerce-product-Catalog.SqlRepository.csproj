@@ -8,18 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Migration\" />
+    <Compile Remove="Migration\**" />
+    <EmbeddedResource Remove="Migration\**" />
+    <None Remove="Migration\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\E-commerce-product-catalog\E-commerce-product-catalog.Domain.csproj" />
+    <ProjectReference Include="..\E-commerce.Identity\E-commerce.Identity.csproj" />
     <ProjectReference Include="..\E_commerce_Product_Catalog.Service\E_commerce_Product_Catalog.Service.csproj" />
   </ItemGroup>
 

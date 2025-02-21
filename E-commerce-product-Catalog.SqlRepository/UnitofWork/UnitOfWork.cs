@@ -19,7 +19,7 @@ namespace E_commerce_product_Catalog.SqlRepository.UnitofWork
 
         #endregion
 
-        public UnitOfWork(ApplicationDbContext dbContext, IUserRepository userRepository, IProductRepository productRepository, IOrderRepository orderRepository, ICartRepository cartRepository, ICategoryRepository categoryRepository)
+        public UnitOfWork(ApplicationDbContext dbContext, IUserRepository userRepository, IProductRepository productRepository, IOrderRepository orderRepository, ICartRepository cartRepository, ICategoryRepository categoryRepository, IUnitOfWork unitOfWorkImplementation)
         {
             _dbContext = dbContext;
             UserRepository = userRepository;
@@ -27,6 +27,7 @@ namespace E_commerce_product_Catalog.SqlRepository.UnitofWork
             OrderRepository = orderRepository;
             CartRepository = cartRepository;
             CategoryRepository = categoryRepository;
+            _unitOfWorkImplementation = unitOfWorkImplementation;
             _userRepository = userRepository;
             _productRepository = productRepository;
             _orderRepository = orderRepository;

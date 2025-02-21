@@ -8,10 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Validation\**" />
+    <Content Remove="Validation\**" />
+    <EmbeddedResource Remove="Validation\**" />
+    <None Remove="Validation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -30,10 +38,6 @@
     <ProjectReference Include="..\E-commerce-product-Catalog.SqlRepository\E-commerce-product-Catalog.SqlRepository.csproj" />
     <ProjectReference Include="..\E-commerce-product-catalog\E-commerce-product-catalog.Domain.csproj" />
     <ProjectReference Include="..\E_commerce_Product_Catalog.Service\E_commerce_Product_Catalog.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validation\" />
   </ItemGroup>
 
 </Project>

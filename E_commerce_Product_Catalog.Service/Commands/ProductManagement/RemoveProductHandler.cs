@@ -12,9 +12,10 @@ namespace E_commerce_Product_Catalog.Service.Commands.ProductManagement
             _productRepository = productRepository;
         }
 
-        public async Task Handle(RemoveProductCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RemoveProductCommand request, CancellationToken cancellationToken)
         {
             await _productRepository.RemoveProductAsync(request.ProductId);
+            return default;
         }
     }
 }

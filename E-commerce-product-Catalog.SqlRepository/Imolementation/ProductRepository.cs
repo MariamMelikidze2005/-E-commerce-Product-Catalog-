@@ -88,20 +88,27 @@ namespace E_commerce_product_Catalog.SqlRepository.Imolementation
         {
             var existingProduct = await GetProductByIdAsync(updatedProduct.Id);
 
-            existingProduct.Name = updatedProduct.Name ?? existingProduct.Name;
-            existingProduct.Description = updatedProduct.Description ?? existingProduct.Description;
-            existingProduct.Price = updatedProduct.Price != 0 ? updatedProduct.Price : existingProduct.Price;
-            existingProduct.Quantity = updatedProduct.Quantity >= 0 ? updatedProduct.Quantity : existingProduct.Quantity;
-            existingProduct.CategoryId = updatedProduct.CategoryId != Guid.Empty ? updatedProduct.CategoryId : existingProduct.CategoryId;
+            if (existingProduct != null)
+            {
+                existingProduct.Name = updatedProduct.Name ?? existingProduct.Name;
+                existingProduct.Description = updatedProduct.Description ?? existingProduct.Description;
+                existingProduct.Price = updatedProduct.Price != 0 ? updatedProduct.Price : existingProduct.Price;
+                existingProduct.Quantity =
+                    updatedProduct.Quantity >= 0 ? updatedProduct.Quantity : existingProduct.Quantity;
+                existingProduct.CategoryId = updatedProduct.CategoryId != Guid.Empty
+                    ? updatedProduct.CategoryId
+                    : existingProduct.CategoryId;
 
-            _dbContext.Products.Update(existingProduct);
+                _dbContext.Products.Update(existingProduct);
+            }
+
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task RemoveProductAsync(Guid productId)
         {
             var product = await GetProductByIdAsync(productId);
-            _dbContext.Products.Remove(product);
+            if (product != null) _dbContext.Products.Remove(product);
             await _dbContext.SaveChangesAsync();
         }
     }
