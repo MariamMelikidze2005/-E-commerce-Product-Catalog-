@@ -1,12 +1,9 @@
 ﻿using E_commerce_Product_Catalog.Service.Abstractions;
+using E_commerce_Product_Catalog.Service.Commands.CartManagement.update;
 using MediatR;
 using ICartRepository = E_commerce_Product_Catalog.Service.Abstractions.ICartRepository;
 
-<<<<<<<< HEAD:E_commerce_Product_Catalog.Service/Commands/CartManagement/Commands/UpdateCartItemQuantityHandler.cs
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.Commands
-========
 namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.update
->>>>>>>> 437baf656f4258360a9208bac00fc648ee20f9d4:E_commerce_Product_Catalog.Service/Commands/CartManagement/update/UpdateCartItemQuantityHandler.cs
 {
     public class UpdateCartItemQuantityHandler : IRequestHandler<UpdateCartItemQuantityCommand>
     {

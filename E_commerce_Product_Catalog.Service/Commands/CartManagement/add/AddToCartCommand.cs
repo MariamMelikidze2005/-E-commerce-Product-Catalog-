@@ -1,10 +1,6 @@
 ﻿using MediatR;
 
-<<<<<<<< HEAD:E_commerce_Product_Catalog.Service/Commands/CartManagement/Commands/AddToCartCommand.cs
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.Commands
-========
 namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.add
->>>>>>>> 437baf656f4258360a9208bac00fc648ee20f9d4:E_commerce_Product_Catalog.Service/Commands/CartManagement/add/AddToCartCommand.cs
 {
     public class AddToCartCommand : IRequest
     {

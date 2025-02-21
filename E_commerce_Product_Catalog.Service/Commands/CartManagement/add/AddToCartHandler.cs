@@ -1,14 +1,12 @@
 ﻿using E_commerce_product_catalog.Exceptions;
 using E_commerce_product_catalog.Models;
 using E_commerce_Product_Catalog.Service.Abstractions;
+using E_commerce_Product_Catalog.Service.Commands.CartManagement.add;
 using MediatR;
 using ICartRepository = E_commerce_Product_Catalog.Service.Abstractions.ICartRepository;
 
-<<<<<<<< HEAD:E_commerce_Product_Catalog.Service/Commands/CartManagement/Commands/AddToCartHandler.cs
-namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.Commands
-========
+
 namespace E_commerce_Product_Catalog.Service.Commands.CartManagement.add
->>>>>>>> 437baf656f4258360a9208bac00fc648ee20f9d4:E_commerce_Product_Catalog.Service/Commands/CartManagement/add/AddToCartHandler.cs
 {
     public class AddToCartHandler : IRequestHandler<AddToCartCommand>
     {
