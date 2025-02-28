@@ -1,38 +1,44 @@
-﻿//using E_commerce_product_Catalog.SqlRepository.Database;
+﻿using E_commerce_product_Catalog.SqlRepository.Database;
+using E_commerce.Identity.Models;
+using E_commerce.Identity.Service.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
-//namespace E_commerce_product_Catalog.SqlRepository.Imolementation
-//{
-//    internal sealed class TokenRepository : ITokenRepository
-//    {
-//        private readonly ApplicationDbContext _dbContext;
+namespace E_commerce_product_Catalog.SqlRepository.Imolementation
+{
+    internal sealed class TokenRepository : ITokenRepository
+    {
+        private readonly ApplicationDbContext _databaseContext;
 
-//        public TokenRepository(ApplicationDbContext dbContext)
-//        {
-//            _dbContext = dbContext;
-//        }
+        public TokenRepository(ApplicationDbContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }
 
-//        public async Task SaveTokenAsync(Token token)
-//        {
-//            await _dbContext.Tokens.AddAsync(token);
-//            await _dbContext.SaveChangesAsync();
-//        }
+        public async Task<RefreshToken?> GetRefreshTokenAsync(string token)
+        {
+            return await _databaseContext
+                .RefreshTokens
+                .FirstOrDefaultAsync(x => x.Value == token);
+        }
 
-//        public async Task<Token?> GetTokenByUserIdAsync(Guid userId)
-//        {
-//            return await _dbContext.Tokens
-//                .FirstOrDefaultAsync(t => t.UserId == userId);
-//        }
+        public async Task DeleteRefreshTokenAsync(Guid id)
+        {
+            await _databaseContext
+                .RefreshTokens
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+        }
 
-//        public async Task RevokeTokenAsync(Guid userId)
-//        {
-//            var token = await GetTokenByUserIdAsync(userId);
-//            if (token != null)
-//            {
-//                _dbContext.Tokens.Remove(token);
-//                await _dbContext.SaveChangesAsync();
-//            }
-//        }
-//    }
+        public async Task AddRefreshTokenAsync(RefreshToken refreshToken)
+        {
+            await _databaseContext.RefreshTokens.AddAsync(refreshToken);
+            await _databaseContext.SaveChangesAsync();
+        }
 
-   
-//}
+        public async Task UpdateAsync(RefreshToken refreshToken)
+        {
+            _databaseContext.RefreshTokens.Update(refreshToken);
+            await _databaseContext.SaveChangesAsync();
+        }
+    }
+}

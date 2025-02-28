@@ -4,6 +4,7 @@ using E_commerce_product_Catalog.SqlRepository.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_commerce_product_Catalog.SqlRepository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250222104007_aspIdentityTable")]
+    partial class aspIdentityTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,26 +50,6 @@ namespace E_commerce_product_Catalog.SqlRepository.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "Customer",
-                            NormalizedName = "CUSTOMER"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "Manager",
-                            NormalizedName = "MANAGER"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        });
                 });
 
             modelBuilder.Entity("E_commerce.Identity.Models.ApplicationUser", b =>
@@ -132,52 +115,6 @@ namespace E_commerce_product_Catalog.SqlRepository.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "24247cce-1ad7-4fe4-ba3e-43c674bd6ce6",
-                            Email = "ECommerceOwner@yopmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "EVENTMANAGEROWNER@YOPMAIL.COM",
-                            NormalizedUserName = "SERVICEDEFAULTOWNER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGIOE+75U/gx0OdCzYPi19fYQZUZao7vshDU74orMUYLNSgWOuYq0uGUzi9IyKbATQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "e7af49ca-c6e6-4d65-adf1-c50af740f897",
-                            TwoFactorEnabled = false,
-                            UserName = "EcommerceDefaultOwner"
-                        });
-                });
-
-            modelBuilder.Entity("E_commerce.Identity.Models.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("ExipiresAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("Value")
-                        .IsUnique();
-
-                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("E_commerce_product_catalog.Models.Cart", b =>
@@ -242,7 +179,7 @@ namespace E_commerce_product_Catalog.SqlRepository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(16,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -261,7 +198,7 @@ namespace E_commerce_product_Catalog.SqlRepository.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(16,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId", "Quantity");
 
@@ -292,8 +229,8 @@ namespace E_commerce_product_Catalog.SqlRepository.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -412,13 +349,6 @@ namespace E_commerce_product_Catalog.SqlRepository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
-                            RoleId = "3"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -438,17 +368,6 @@ namespace E_commerce_product_Catalog.SqlRepository.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("E_commerce.Identity.Models.RefreshToken", b =>
-                {
-                    b.HasOne("E_commerce.Identity.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("E_commerce_product_catalog.Models.CartItem", b =>

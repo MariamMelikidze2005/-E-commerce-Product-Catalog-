@@ -11,5 +11,8 @@ namespace E_commerce.Identity.Service.Abstractions
     {
         string GenerateAccessTokenFor(ApplicationUser user);
 
+        Task<string> GenerateRefreshTokenAsync(ApplicationUser user);
+
+        Task<string> RefreshTokenAsync(string token);
     }
 }

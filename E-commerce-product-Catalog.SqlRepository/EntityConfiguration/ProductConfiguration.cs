@@ -30,4 +30,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasForeignKey(p => p.OwnerId)
             .IsRequired();
     }
+
+    //TODO : make Endpoint for registration for login for email confirmation(otp) make jwt claim for role assign and deleting role from user
 }
